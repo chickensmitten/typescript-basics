@@ -103,5 +103,18 @@ generateError('An error occurred!', 500);
 ```
 
 ## Typescript compiler and its configuration
+- to use `tsc` command either `npm install typescript@latest -g` or use `npx`
 - `tsc using-ts.ts --watch` invoke typescript compiler to open a ts console and let it auto compile
-- run `tsc --init` in the project root directory to compile all ts files
+- run `tsc --init` in the project root directory to create `tsconfig.json` file
+- `tsconfig.json` is crucial file for managing the project. `include` and `exclude` in it will exclude or include files to compile.
+- `compilerOptions` helps us control how our typescript code is compiled
+- if `sourceMap` set to true, it will help us with debugging ts files as we can access them in browser inspect
+- `.d.ts` is a declaration of types. these files are needed for third party ts libraries.
+- `"outDir": "./dist"` tells where the create js files will be stored
+- `"rootDir": "./src"` to make sure typescript compiler doesn't look at other folders. It also maintains the folder structure.
+- `"removeComments": true` removes comment in ts file.
+- `noEmit: true` if you don't want to create output js file. because you just want to check. It is helpful for big projects to save time.
+- `"noEmitOnError": true,` means don't emit if there is an error in typescript code.
+- `"noImplicitAny": false` at false, it ensures that we have to be clear on the parameters and value types that we are working with our code.
+- `"strictNullChecks": true` asks typescript to be strict on working with values that might contain null value.
+- for debugging, install chrome debugger from vscode marketplace. then "Run" > "Start Debugging". You should see a `launch.json` file. Then start debugging, the code should stop running at the breakpoint.
