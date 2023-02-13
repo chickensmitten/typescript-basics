@@ -1,20 +1,19 @@
 {
-  "name": "typescript-basics",
+  "name": "understanding-typescript",
   "version": "1.0.0",
-  "description": "## Typescript basics - it is a compiler for javascript - browser can't run typescript - gives extra error checking for logical mistakes ``` // plain javascript function add(num1, num2) {   return num1 + num2; }",
-  "main": "index.js",
+  "description": "Understanding TypeScript Course Setup",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chickensmitten/typescript-basics.git"
-  },
-  "author": "",
+  "keywords": [
+    "typescript",
+    "course"
+  ],
+  "author": "Maximilian Schwarzmüller",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chickensmitten/typescript-basics/issues"
-  },
-  "homepage": "https://github.com/chickensmitten/typescript-basics#readme"
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  }
 }
