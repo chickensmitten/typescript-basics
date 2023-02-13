@@ -118,3 +118,45 @@ generateError('An error occurred!', 500);
 - `"noImplicitAny": false` at false, it ensures that we have to be clear on the parameters and value types that we are working with our code.
 - `"strictNullChecks": true` asks typescript to be strict on working with values that might contain null value.
 - for debugging, install chrome debugger from vscode marketplace. then "Run" > "Start Debugging". You should see a `launch.json` file. Then start debugging, the code should stop running at the breakpoint.
+
+## Next Generation Javascript and Typescript
+- Shouldn't use `var` anymore, it is a global scope. Instead, use `let` and `const`, it uses block scope where variables called within a scope like a function is only usable within it, unless it is called from a higher scope.
+- arrow function, possible permutations
+```
+const add = (a: number, b: number) => {
+  return a + b;
+};
+
+const add  = (a: number, b: number) => a + b;
+
+const add  = () => "something";
+
+const printOutput = output => console.log(output); // but not usable in ts, cauase there is no type for output
+```
+- default function parameters, should be the last
+```
+const add  = (a: number, b: number = 1) => a + b; // cannot a: number = 1
+
+printOutput(add(5));
+```
+- spread operator
+```
+const hobbies = ["sports", "cooking"];
+const activeHobbies = ["Hiking"];
+activeHobbies.push(...hobbies); // not activeHobbies.push(hobbies)
+```
+- rest parameters with typescript
+```
+const add = (...numbers: number[]) => {
+  return numbers.reduce((curResult, curValue) => {
+    return curResult + curValue;
+  }, 0);
+}
+```
+- destructuring array and objects
+```
+const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+console.log(hobbies, hobby1, hobby2); // returns ["running", "soccer", ["basketball", "rugby"]]
+const {firstName, age} = person; // the firstName and age key must be available in the object
+const {firstName: userName, age} = person; // firstName key is renamed as userName
+```
