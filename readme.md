@@ -315,6 +315,143 @@ interface Named {
 }
 ```
 
+## Advanced Types
+- intersection types combines two types like interface inheritance
+```
+type Admin = {
+  name: string;
+  privileges: string[];
+};
+
+type Employee = {
+  name: string;
+  startDate: Date;
+};
+
+// interface ElevatedEmployee extends Employee, Admin {}
+
+type ElevatedEmployee = Admin & Employee;
+```
+- type guard is the idea of checking a certain property or method exist before you use it. Code below uses `typeof`
+```
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === "string" || typeof b === "string" ) {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+```
+- use type guard to check if there is a property in an instance with `in`
+```
+const e1: ElevatedEmployee = {
+  name: 'Max',
+  privileges: ['create-server'],
+  startDate: new Date()
+};
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInformation(emp: UnkonwnEmployee) {
+  if ('privileges' in emp) {
+    console.log("Privileges: " + emp.privileges);
+  }
+}
+```
+- Discriminated Unions. there is one common property in every object. note the `type` is the only common property in the interfaces below. Without it, it is difficult to have type guards.
+```
+interface Bird {
+  type: 'bird';
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: 'horse';
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed;
+  switch (animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    case 'horse':
+      speed = animal.runningSpeed;
+  }
+  console.log('Moving at speed: ' + speed);
+}
+
+moveAnimal({type: 'bird', flyingSpeed: 10});
+```
+-typecasting `<HTMLInputElement>` or `as HTMLInputElement`
+- the exclamation `!` means the result will never yield null.
+```
+// const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
+const userInputElement = document.getElementById('user-input');
+
+if (userInputElement) {
+  (userInputElement as HTMLInputElement).value = 'Hi there!';
+}
+
+interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character!' }
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email!',
+  username: 'Must start with a capital character!'
+};
+```
+- Index properties or index types solves the problem where I don't know in advance which property or how many is inside. Need an object where I am pretty clear on the key type and value type. `[prop: string]: string;`
+```
+interface ErrorContainer { // { email: 'Not a valid email', username: 'Must start with a character!' }
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email!',
+  username: 'Must start with a capital character!'
+};
+```
+- function overloads helps typescript infer the return type in your function
+```
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: string, b: number): string;
+function add(a: number, b: string): string;
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === 'string' || typeof b === 'string') {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+
+const result = add('Max', ' Schwarz');
+```
+- optional chaining, checking if object or property exists with `?`
+```
+const fetchedUserData = {
+  id: 'u1',
+  name: 'Max',
+  // job: { title: 'CEO', description: 'My own company' }
+};
+
+console.log(fetchedUserData?.job?.title);
+```
+- Nullish coalescing with `??`
+```
+const userInput = undefined;
+
+const storedData = userInput ?? 'DEFAULT';
+
+console.log(storedData);
+```
+
 
 
 
