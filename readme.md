@@ -232,6 +232,7 @@ const accounting = AccountingDepartment.getInstance();
 
 ## Interfaces
 - An interface describes the structure of an object. It only exits in typescript, not javascript.
+- Interfaces can't be instantiated and are not compiled, classes can be instantiated and are compiled.
 - Can use interface to type check an object
 ```
 interface Greetable {
@@ -250,7 +251,7 @@ user1 = {
 
 user1.greet("Hi there I am"); // returns "hi there I am Simon"
 ```
-- Why use `interface` when can use custom `type`? `type` is more flexible, but `interface` is more strict therefore clear. `interface` can be used as a contract that a class will have to adhere to. 
+- Why use `interface` when can use custom `type`? `type` is more flexible, but `interface` is more strict therefore clear i.e. can't use union unlike `type`. `interface` can be used as a contract that a class will have to adhere to. 
 ```
 class Person implements Greetable, AnotherInterface {
   name: string;
