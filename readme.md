@@ -160,3 +160,161 @@ console.log(hobbies, hobby1, hobby2); // returns ["running", "soccer", ["basketb
 const {firstName, age} = person; // the firstName and age key must be available in the object
 const {firstName: userName, age} = person; // firstName key is renamed as userName
 ```
+
+## Classes
+- All classes have constructors. It can be shortened with the example below:
+```
+class Product {
+  title: string;
+  price: number;
+  private isListed: boolean;
+ 
+  constructor(name: string, pr: number) {
+    this.title = name;
+    this.price = pr;
+    this.isListed = true;
+  }
+}
+
+// shortened below
+class Product {
+  private isListed: boolean;
+ 
+  constructor(public title: string, public price: number) {
+    this.isListed = true;
+  }
+}
+```
+- `this` typically refers to the thing that calls for it. In the code example below, `this` refers to the instance of the Department class.
+```
+describe(this: Department) {
+  console.log("Department: " + this.name)
+}
+```
+- `readonly` is available for typescript, not javascript.
+- `static` methods and properties can be accessed directly from the class and not through the instance of classes. i.e. `Math.pow()` instead of `const math1 = Math.new; math1.pow()`
+- `abstract` can't be instantiated, has to be extended. It means that a method must be implemented by any class based on the abstract class. **It is useful if you want to enforce that all classes based on other class, share some common methods of property while not needing to provide the concrete value or concrete implementation of the base class, instead the inheriting class has to do that. Classes marked as abstract can't be instantiated, it can only be inherited from and for inheriting classes to instantiate**
+```
+abstract class Department {
+  ...
+  abstract describe(this: Department): void;
+  ...
+}
+
+class ITDepartment extends Department {
+  ...
+  describe() {
+    console.log("IT Department " + this.id);
+  }
+  ...
+}
+
+```
+- Private constructors. There is a pattern in OOP called the Singleton pattern. It ensures that you only have one instance of a certain class. It can be useful if you can't use static methods or properties. When you can't use static methods or properties for whatever reason while don't want multiple objects for a class. i.e. there is only one AccountingDepartment under Department class. This is done by adding `private` before the constructor class
+```
+// under AccountingDepartment class
+private constructor(id: string, private reports: string[]) { ... }
+```
+Then you can't call `new` outside of the class to instantiate a class. To call the private constructors, have to use static.
+```
+private static instance: AccountingDepartment; // creates one instance of an AccountingDepartment
+
+static getInstance() {
+  if (AccountingDepartment.instance) {
+    return this.instance;
+  }
+  this.instance = new AccountingDepartment("d2", []); // new can be called within the class.
+  return this.instance;
+}
+
+const accounting = AccountingDepartment.getInstance();
+```
+
+## Interfaces
+- An interface describes the structure of an object. It only exits in typescript, not javascript.
+- Can use interface to type check an object
+```
+interface Greetable {
+  name: string;
+  greet(phrase: string): void;
+}
+
+let user1: Greetable;
+
+user1 = {
+  name: "Simon",
+  greet(phrase: string) {
+    console.log(phrase + " " + this.name);
+  }
+};
+
+user1.greet("Hi there I am"); // returns "hi there I am Simon"
+```
+- Why use `interface` when can use custom `type`? `type` is more flexible, but `interface` is more strict therefore clear. `interface` can be used as a contract that a class will have to adhere to. 
+```
+class Person implements Greetable, AnotherInterface {
+  name: string;
+  age = 30;
+
+  constructor(n: string) {
+    this.name = n;
+  }
+
+  greet() {
+    console.log(phrase + " " + this.name);
+  }
+
+}
+
+let user1: Greetable;
+user1 = new Person("Max");
+```
+- Can also add `readonly` into interfaces
+```
+interface Greetable {
+  readonly name: string;
+}
+```
+- extending interfaces with `extends`
+```
+interface Named {
+  readonly name: string;
+}
+
+interface Greetable extends Named {
+  greet(phrase: string): void;
+}
+
+class Person implements Greetable {
+  name: string;
+  age = 30;
+
+  ...
+}
+```
+- interfaces as function types
+```
+// type AddFn = (a: number, b: number) => number;
+interface AddFn {
+  (a: number, b: number): number;
+}
+
+let add: AddFn;
+
+add = (n1: number, n2: number) => {
+  return n1 + n2;
+}
+```
+- Optional methods, parameters and properties with `?`
+```
+interface Named {
+  readonly name: string;
+  outputName?: string;
+  myMethod?() { ... }
+}
+```
+
+
+
+
+
