@@ -452,7 +452,83 @@ const storedData = userInput ?? 'DEFAULT';
 console.log(storedData);
 ```
 
+## Generics
+- Generic types helps get additional type information. it is done by adding angled brackets. It provides flexibility with type safety.
+- Code below is a Promise type that returns a string
+```
+const names: Array<string> = []; // string[]
+// names[0].split(' ');
 
+const promise: Promise<number> = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(10);
+  }, 2000);
+});
 
+promise.then(data => {
+  // data.split(' ');
+})
 
+function merge<T extends object, U extends object>(objA: T, objB: U) {
+  return Object.assign(objA, objB);
+}
+
+const mergedObj = merge({ name: 'Max', hobbies: ['Sports'] }, { age: 30 });
+console.log(mergedObj);
+```
+- Generic class. Take note that reference values don't work so well i.e. objects. Better to work with primitive values.
+```
+class DataStorage<T extends string | number | boolean> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1); // -1
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorage = new DataStorage<string>();
+textStorage.addItem('Max');
+textStorage.addItem('Manu');
+textStorage.removeItem('Max');
+console.log(textStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+
+// const objStorage = new DataStorage<object>();
+// const maxObj = {name: 'Max'};
+// objStorage.addItem(maxObj);
+// objStorage.addItem({name: 'Manu'});
+// // ...
+// objStorage.removeItem(maxObj);
+// console.log(objStorage.getItems());
+```
+- Generic Utility types only exists in typescript world. Refer to this for more info on [Generic Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html). i.e. `Partial` and `ReadOnly` are generic utility types
+```
+function createCourseGoal(
+  title: string,
+  description: string,
+  date: Date
+): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+  return courseGoal as CourseGoal;
+}
+
+const names: Readonly<string[]> = ['Max', 'Anna'];
+```
+- Use union types if you want every method call of an instance to be flexible. Use generic types if you want to lock in the method calls to specific types
+- More on [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)
 
