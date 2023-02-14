@@ -532,3 +532,73 @@ const names: Readonly<string[]> = ['Max', 'Anna'];
 - Use union types if you want every method call of an instance to be flexible. Use generic types if you want to lock in the method calls to specific types
 - More on [Generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)
 
+## Decorators
+- set `"experimentalDecorators": true` to use decorators
+- A decorator is just a function that applies something to a class. Decorator execute when class is defined.
+```
+function Logger(constructor: Function) {
+  console.log("Logging...");
+  console.log(constructor);
+}
+
+@Logger
+class Person {
+  name = "Simon";
+  constructor() {
+    console.log("Creating person object...");
+  }
+}
+```
+- Decorator Factories are decorator functions that creates functions.
+```
+function Logger(logString: string) {
+  return function(constructor: Function) {
+    console.log(logString);
+    console.log(constructor);
+  }
+}
+
+
+@Logger("LOGGING -PERSON ")
+class Person {
+  name = "Simon";
+  constructor() {
+    console.log("Creating person object...");
+  }
+}
+```
+- add multiple decorators by stacking it. Creation is top to bottom (from Logger to WithTemplate), but the execution bottoms up (from WithTemplate to Logger)
+```
+@Logger("LOGGING")
+@WithTemplate("<h1>Object</h1>", "app")
+class Person {
+  ...
+}
+```
+- Can add decorator to a property. They are executed when class is defined. Not at run time.
+```
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  @Log2
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error('Invalid price - should be positive!');
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  @Log3
+  getPriceWithTax(@Log4 tax: number) {
+    return this._price * (1 + tax);
+  }
+}
+```
