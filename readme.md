@@ -669,6 +669,7 @@ for (let s of strings) {
 ```
 - `lodash` is used for typescript translation service.
 
-
+## Create React App with TypeScript
+- `npx create-react-app . --typescript` to create a typescript app
 
 
