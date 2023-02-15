@@ -672,4 +672,12 @@ for (let s of strings) {
 ## Create React App with TypeScript
 - `npx create-react-app . --typescript` to create a typescript app
 
-
+## Create Node App with Typescript
+- run `npm init` and `tsc init`
+- refer to `tsconfig.json` on how to set it up for node
+- then `npm install --save express body-parser`. body parser might not be needed for newer express versions.
+- install `npm install --save-dev nodemon`
+- then `npm install --save-dev @types/node`
+- and `npm install --save-dev @types/express`
+- typecasting `as` is used here `const text = (req.body as {text: string}).text` because we know what is incoming from the request
+- might want to consider using Nest.JS if you want to build server side web application with node and typescript
