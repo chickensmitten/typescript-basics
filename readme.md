@@ -658,3 +658,17 @@ for (let s of strings) {
 
 
 ```
+
+## Webpack
+- Webpack is required to bundle, build and orchestrate the files. Optimizing code.
+- `webpack.config.prod.js` are instructions on how to compile the code with webpack. 
+- start and build in `package.json` executes instructions for webpack.
+```
+    "start": "webpack-dev-server",
+    "build": "webpack --config webpack.config.prod.js"
+```
+- `lodash` is used for typescript translation service.
+
+
+
+
