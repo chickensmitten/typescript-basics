@@ -453,7 +453,7 @@ console.log(storedData);
 ```
 
 ## Generics
-- Generic types helps get additional type information. it is done by adding angled brackets. It provides flexibility with type safety.
+- Generic types or `<Type>` helps get additional type information. it is done by adding angled brackets. It provides flexibility with type safety.
 - Code below is a Promise type that returns a string
 ```
 const names: Array<string> = []; // string[]
